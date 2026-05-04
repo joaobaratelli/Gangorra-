@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animação Gangorra Hexágono</title>
+    <title>Animação Gangorra Hexágono Rolando</title>
     <style>
         /* Estilos do Fundo */
         body {
@@ -14,17 +14,18 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            overflow: hidden; /* Evita barras de rolagem */
+            overflow: hidden;
         }
 
-        /* Container Principal da Gangorra */
+        /* Container Principal */
         .gangorra-container {
             position: relative;
             width: 400px; /* Largura da gangorra */
-            height: 200px; /* Altura da área de animação */
-            display: flex;
-            justify-content: center;
-            align-items: flex-end; /* Alinha a gangorra na parte inferior do container */
+            height: 200px; /* Altura da área da animação */
+            /* Aplicamos a mesma rotação ao container todo para a gangorra e o hexágono 
+               inclinarem juntos perfeitamente */
+            animation: gangorra-movimento 6s ease-in-out infinite;
+            transform-origin: center bottom;
         }
 
         /* O Braço da Gangorra (o traço reto branco) */
@@ -32,74 +33,74 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 100%; /* Ocupa toda a largura do container */
+            width: 100%;
             height: 4px; /* Espessura do traço */
             background-color: white; /* Cor Branca */
-            transform-origin: center bottom; /* Ponto de rotação no centro inferior */
-            
-            /* Animação do braço da gangorra */
-            animation: gangorra-movimento 4s ease-in-out infinite;
         }
 
         /* O Hexágono Branco */
         .hexagono {
             position: absolute;
-            width: 60px; /* Largura do hexágono */
-            height: 34.64px; /* Altura proporcional do hexágono (width * sqrt(3)/2) */
+            width: 50px; /* Largura do hexágono */
+            height: 28.87px; /* Altura proporcional */
             background-color: white; /* Cor Branca */
             
-            /* Posição inicial no topo da gangorra (centro) */
-            top: -34.64px; /* Ajusta para ficar acima do traço */
-            left: calc(50% - 30px); /* Centraliza horizontalmente */
+            /* Posiciona o hexágono logo acima do traço */
+            bottom: 4px; 
+            left: 0;
 
             /* Criação do formato de hexágono usando clip-path */
             clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
             
-            transform-origin: center bottom; /* Ponto de rotação no centro inferior do hexágono */
+            /* Ponto de rotação no centro do próprio hexágono */
+            transform-origin: center center;
 
-            /* Animação do hexágono acompanhando o braço */
-            animation: hexagono-movimento 4s ease-in-out infinite;
+            /* Animação do hexágono rolando de um lado para o outro */
+            animation: hexagono-rolando 6s ease-in-out infinite;
         }
 
         /* Definição das Animações (Keyframes) */
 
-        /* Animação do Movimento da Gangorra (Rotação) */
+        /* 1. Faz a gangorra inteira inclinar */
         @keyframes gangorra-movimento {
             0% {
-                transform: rotate(0deg); /* Posição inicial (plana) */
+                transform: rotate(0deg);
             }
             25% {
-                transform: rotate(15deg); /* Sobe do lado esquerdo (inclina para a direita) */
+                transform: rotate(12deg); /* Inclina para a direita, fazendo o hexágono descer */
             }
             50% {
-                transform: rotate(0deg); /* Volta à posição plana */
+                transform: rotate(0deg); /* Volta ao centro */
             }
             75% {
-                transform: rotate(-15deg); /* Sobe do lado direito (inclina para a esquerda) */
+                transform: rotate(-12deg); /* Inclina para a esquerda, fazendo o hexágono descer */
             }
             100% {
-                transform: rotate(0deg); /* Volta à posição plana */
+                transform: rotate(0deg);
             }
         }
 
-        /* Animação do Movimento do Hexágono (Acompanha a inclinação) */
-        @keyframes hexagono-movimento {
+        /* 2. Faz o hexágono rolar de uma ponta à outra */
+        @keyframes hexagono-rolando {
             0% {
-                transform: translate(0, 0) rotate(0deg);
+                /* Começa no centro */
+                transform: translateX(175px) rotate(0deg);
             }
             25% {
-                /* Desloca um pouco para a direita e rotaciona junto com o braço */
-                transform: translate(10px, 2px) rotate(15deg);
+                /* Vai até a ponta direita (400px - 50px de largura = 350px) e gira */
+                transform: translateX(350px) rotate(360deg);
             }
             50% {
-                transform: translate(0, 0) rotate(0deg);
+                /* Volta para o centro */
+                transform: translateX(175px) rotate(0deg);
             }
             75% {
-                /* Desloca um pouco para a esquerda e rotaciona junto com o braço */
-                transform: translate(-10px, 2px) rotate(-15deg);
+                /* Vai até a ponta esquerda (0px) e gira no sentido inverso */
+                transform: translateX(0px) rotate(-360deg);
             }
             100% {
-                transform: translate(0, 0) rotate(0deg);
+                /* Retorna ao centro */
+                transform: translateX(175px) rotate(0deg);
             }
         }
     </style>
@@ -107,6 +108,12 @@
 <body>
 
     <div class="gangorra-container">
+        <div class="hexagono"></div>
+        <div class="gangorra-traco"></div>
+    </div>
+
+</body>
+</html>
         <div class="gangorra-traco">
             <div class="hexagono"></div>
         </div>
