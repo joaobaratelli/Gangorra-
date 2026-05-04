@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gangorra Infinita - Hexágono Regular</title>
+    <title>Gangorra com Equilíbrio Perfeito</title>
     <style>
+        /* Estilo do Fundo e Reset */
         body {
             margin: 0;
+            padding: 0;
             background-color: black;
             display: flex;
             justify-content: center;
@@ -15,92 +17,106 @@
             overflow: hidden;
         }
 
-        /* O ponto central onde a gangorra se apoia */
-        .suporte {
+        /* O "Mundo" onde a animação acontece */
+        .cena {
             position: relative;
-            width: 500px; /* Largura total da área da gangorra */
-            height: 4px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 500px;
+            height: 300px;
         }
 
-        /* A linha da gangorra */
+        /* O Pilar da Gangorra (Cria o sentido de base e gravidade) */
+        .base-gangorra {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 70px solid #444; /* Triângulo cinza segurando a barra */
+        }
+
+        /* A Linha da Gangorra */
         .gangorra {
             position: absolute;
-            width: 100%;
+            top: 50%;
+            left: 50%;
+            margin-top: -2px; /* Ajuste fino para o centro */
+            margin-left: -210px; /* Metade de 420px */
+            width: 420px;
             height: 4px;
             background-color: white;
-            border-radius: 2px;
-            /* Animação de inclinação */
-            animation: inclinar 5s ease-in-out infinite;
+            border-radius: 4px;
+            
+            /* Ponto de equilíbrio no centro exato */
+            transform-origin: center center;
+            animation: gangorra-inclinacao 6s ease-in-out infinite;
         }
 
-        /* O Hexágono Regular */
-        .hexagono {
+        /* Container que transporta o hexágono de um lado ao outro */
+        .hexagono-wrapper {
             position: absolute;
-            /* Para ser regular, a altura é ~86.6% da largura */
+            bottom: 4px; /* Grudado perfeitamente em cima da barra */
+            left: 50%;
+            margin-left: -30px; /* Metade da largura (60/2) para iniciar no centro */
             width: 60px;
-            height: 51.96px; 
+            height: 51.96px; /* Altura exata para o hexágono ser geometricamente perfeito */
+            
+            /* Animação de translação lateral */
+            animation: hexagono-deslize 6s ease-in-out infinite;
+        }
+
+        /* O Hexágono que apenas gira em seu próprio eixo */
+        .hexagono {
+            width: 100%;
+            height: 100%;
             background-color: white;
             
-            /* Posicionamento: 'bottom: 4px' para ficar em cima da linha */
-            bottom: 4px;
-            left: 50%;
-            margin-left: -30px; /* Centraliza o hexágono no meio da barra */
-
-            /* Desenho do Hexágono Proporcional */
+            /* Desenho do hexágono com base plana (lados retos em cima e embaixo) */
             clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-
-            /* Animação de rolagem sincronizada */
-            animation: rolar 5s ease-in-out infinite;
+            
+            /* Animação de rotação */
+            animation: hexagono-giro 6s ease-in-out infinite;
         }
 
-        /* KEYFRAMES */
+        /* --- KEYFRAMES (A MÁGICA DA FÍSICA) --- */
 
-        /* A gangorra sobe e desce as pontas */
-        @keyframes inclinar {
+        /* 1. O Peso: A gangorra desce para o lado do hexágono */
+        @keyframes gangorra-inclinacao {
             0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(15deg); } /* Lado direito desce */
-            75% { transform: rotate(-15deg); } /* Lado esquerdo desce */
+            25% { transform: rotate(12deg); }  /* Lado direito desce */
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(-12deg); } /* Lado esquerdo desce */
         }
 
-        /* O hexágono desliza e gira sem sair das bordas */
-        @keyframes rolar {
-            0%, 100% { 
-                transform: translateX(0) rotate(0deg); 
-            }
-            25% { 
-                /* Move para a direita (250px é metade da barra, 
-                   subtraímos um pouco para não cair da ponta) */
-                transform: translateX(210px) rotate(360deg); 
-            }
-            75% { 
-                /* Move para a esquerda */
-                transform: translateX(-210px) rotate(-360deg); 
-            }
+        /* 2. O Deslize: Vai até a ponta, mas NÃO cai */
+        @keyframes hexagono-deslize {
+            0%, 100% { transform: translateX(0); }
+            /* 180px é exatamente a distância segura. A borda do hexágono para a milímetros de cair */
+            25% { transform: translateX(180px); } 
+            50% { transform: translateX(0); }
+            75% { transform: translateX(-180px); } 
+        }
+
+        /* 3. A Tração: O giro de 360º ocorre exatamente em 180px, criando tração real */
+        @keyframes hexagono-giro {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(360deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(-360deg); }
         }
     </style>
 </head>
 <body>
 
-    <div class="suporte">
+    <div class="cena">
+        <div class="base-gangorra"></div>
+        
         <div class="gangorra">
-            <div class="hexagono"></div>
-        </div>
-    </div>
-
-</body>
-</html>
-    <div class="gangorra-container">
-        <div class="hexagono"></div>
-        <div class="gangorra-traco"></div>
-    </div>
-
-</body>
-</html>
-        <div class="gangorra-traco">
-            <div class="hexagono"></div>
+            <div class="hexagono-wrapper">
+                <div class="hexagono"></div>
+            </div>
         </div>
     </div>
 
