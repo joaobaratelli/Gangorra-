@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gangorra - Equilíbrio Contínuo</title>
+    <title>Gangorra - Harmonia e Velocidade</title>
     <style>
         /* Estilo do Fundo e Reset */
         body {
@@ -29,7 +29,7 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            margin-top: -2px; /* Ajuste fino para o centro */
+            margin-top: -2px; 
             margin-left: -210px; /* Metade de 420px */
             width: 420px;
             height: 4px;
@@ -38,21 +38,22 @@
             
             /* Ponto de equilíbrio no centro exato */
             transform-origin: center center;
-            /* Usamos 'linear' para não ter paradas ou desaceleração */
-            animation: gangorra-inclinacao 3.5s linear infinite alternate;
+            
+            /* cubic-bezier personalizado para suavidade nas pontas */
+            animation: gangorra-inclinacao 2.4s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
         }
 
         /* Container que transporta o hexágono */
         .hexagono-wrapper {
             position: absolute;
-            bottom: 4px; /* Grudado na linha */
+            bottom: 4px; /* Perfeitamente acima da linha */
             left: 50%;
             margin-left: -30px; /* Centraliza o eixo */
             width: 60px;
             height: 51.96px; /* Geometria proporcional perfeita */
             
-            /* Movimento linear contínuo */
-            animation: hexagono-deslize 3.5s linear infinite alternate;
+            /* Sincronizado exatamente com a gangorra */
+            animation: hexagono-deslize 2.4s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
         }
 
         /* O Hexágono que gira */
@@ -63,15 +64,13 @@
             
             clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
             
-            /* Rotação linear contínua */
-            animation: hexagono-giro 3.5s linear infinite alternate;
+            /* Rotação em perfeita sincronia */
+            animation: hexagono-giro 2.4s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
         }
 
-        /* --- KEYFRAMES (SEM PARADAS) --- */
+        /* --- KEYFRAMES --- */
 
-        /* Usar 'alternate' faz a animação ir de 0% a 100% e voltar de forma contínua */
-
-        /* 1. A inclinação vai de um extremo ao outro sem desacelerar */
+        /* 1. A inclinação vai de um extremo ao outro */
         @keyframes gangorra-inclinacao {
             0% { transform: rotate(-12deg); }
             100% { transform: rotate(12deg); }
@@ -83,7 +82,7 @@
             100% { transform: translateX(180px); }
         }
 
-        /* 3. O giro acompanha a rolagem perfeitamente */
+        /* 3. O giro acompanha o movimento lateral */
         @keyframes hexagono-giro {
             0% { transform: rotate(-360deg); }
             100% { transform: rotate(360deg); }
