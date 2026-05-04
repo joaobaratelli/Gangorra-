@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gangorra com Equilíbrio Perfeito</title>
+    <title>Gangorra Contínua</title>
     <style>
         /* Estilo do Fundo e Reset */
         body {
@@ -24,19 +24,6 @@
             height: 300px;
         }
 
-        /* O Pilar da Gangorra (Cria o sentido de base e gravidade) */
-        .base-gangorra {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-bottom: 70px solid #444; /* Triângulo cinza segurando a barra */
-        }
-
         /* A Linha da Gangorra */
         .gangorra {
             position: absolute;
@@ -51,7 +38,7 @@
             
             /* Ponto de equilíbrio no centro exato */
             transform-origin: center center;
-            animation: gangorra-inclinacao 6s ease-in-out infinite;
+            animation: gangorra-inclinacao 4s ease-in-out infinite;
         }
 
         /* Container que transporta o hexágono de um lado ao outro */
@@ -59,60 +46,50 @@
             position: absolute;
             bottom: 4px; /* Grudado perfeitamente em cima da barra */
             left: 50%;
-            margin-left: -30px; /* Metade da largura (60/2) para iniciar no centro */
+            margin-left: -30px; /* Centraliza o eixo */
             width: 60px;
-            height: 51.96px; /* Altura exata para o hexágono ser geometricamente perfeito */
+            height: 51.96px; /* Proporção matemática perfeita do hexágono */
             
-            /* Animação de translação lateral */
-            animation: hexagono-deslize 6s ease-in-out infinite;
+            /* Animação de translação contínua de ponta a ponta */
+            animation: hexagono-deslize 4s ease-in-out infinite;
         }
 
-        /* O Hexágono que apenas gira em seu próprio eixo */
+        /* O Hexágono que gira no próprio eixo */
         .hexagono {
             width: 100%;
             height: 100%;
             background-color: white;
             
-            /* Desenho do hexágono com base plana (lados retos em cima e embaixo) */
             clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
             
-            /* Animação de rotação */
-            animation: hexagono-giro 6s ease-in-out infinite;
+            /* Animação de rotação contínua */
+            animation: hexagono-giro 4s ease-in-out infinite;
         }
 
-        /* --- KEYFRAMES (A MÁGICA DA FÍSICA) --- */
+        /* --- KEYFRAMES (MOVIMENTO CONTÍNUO) --- */
 
-        /* 1. O Peso: A gangorra desce para o lado do hexágono */
+        /* 1. A Gangorra agora alterna direto de uma ponta à outra */
         @keyframes gangorra-inclinacao {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(12deg); }  /* Lado direito desce */
-            50% { transform: rotate(0deg); }
-            75% { transform: rotate(-12deg); } /* Lado esquerdo desce */
+            0%, 100% { transform: rotate(-12deg); } /* Começa inclinada para a esquerda */
+            50% { transform: rotate(12deg); }      /* Vai direto para a direita */
         }
 
-        /* 2. O Deslize: Vai até a ponta, mas NÃO cai */
+        /* 2. O Hexágono viaja de -180px até +180px sem parar no meio */
         @keyframes hexagono-deslize {
-            0%, 100% { transform: translateX(0); }
-            /* 180px é exatamente a distância segura. A borda do hexágono para a milímetros de cair */
-            25% { transform: translateX(180px); } 
-            50% { transform: translateX(0); }
-            75% { transform: translateX(-180px); } 
+            0%, 100% { transform: translateX(-180px); } /* Fica na ponta esquerda */
+            50% { transform: translateX(180px); }       /* Viaja direto até a ponta direita */
         }
 
-        /* 3. A Tração: O giro de 360º ocorre exatamente em 180px, criando tração real */
+        /* 3. A Tração: O giro acompanha a distância total percorrida (720 graus = 2 voltas) */
         @keyframes hexagono-giro {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(360deg); }
-            50% { transform: rotate(0deg); }
-            75% { transform: rotate(-360deg); }
+            0%, 100% { transform: rotate(-360deg); }
+            50% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
 
     <div class="cena">
-        <div class="base-gangorra"></div>
-        
         <div class="gangorra">
             <div class="hexagono-wrapper">
                 <div class="hexagono"></div>
