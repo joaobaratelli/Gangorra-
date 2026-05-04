@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gangorra - Harmonia e Velocidade</title>
+    <title>Equilíbrio Dinâmico Perpétuo</title>
     <style>
-        /* Estilo do Fundo e Reset */
         body {
             margin: 0;
             padding: 0;
@@ -17,73 +16,64 @@
             overflow: hidden;
         }
 
-        /* O "Mundo" onde a animação acontece */
         .cena {
             position: relative;
-            width: 500px;
-            height: 300px;
+            width: 600px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         /* A Linha da Gangorra */
         .gangorra {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            margin-top: -2px; 
-            margin-left: -210px; /* Metade de 420px */
-            width: 420px;
+            width: 450px;
             height: 4px;
             background-color: white;
-            border-radius: 4px;
-            
-            /* Ponto de equilíbrio no centro exato */
+            border-radius: 2px;
             transform-origin: center center;
-            
-            /* cubic-bezier personalizado para suavidade nas pontas */
-            animation: gangorra-inclinacao 2.4s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+            /* Animação com curva de seno para manter a fluidez */
+            animation: inclinacao 1.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
         }
 
-        /* Container que transporta o hexágono */
+        /* Container do Hexágono */
         .hexagono-wrapper {
             position: absolute;
-            bottom: 4px; /* Perfeitamente acima da linha */
+            bottom: 4px; /* Sobre a linha */
             left: 50%;
-            margin-left: -30px; /* Centraliza o eixo */
+            margin-left: -30px;
             width: 60px;
-            height: 51.96px; /* Geometria proporcional perfeita */
-            
-            /* Sincronizado exatamente com a gangorra */
-            animation: hexagono-deslize 2.4s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+            height: 51.96px;
+            /* O movimento lateral precisa ser idêntico ao tempo da gangorra */
+            animation: deslize 1.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
         }
 
-        /* O Hexágono que gira */
+        /* O Hexágono propriamente dito */
         .hexagono {
             width: 100%;
             height: 100%;
             background-color: white;
-            
             clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-            
-            /* Rotação em perfeita sincronia */
-            animation: hexagono-giro 2.4s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+            /* Rotação contínua para simular tração */
+            animation: giro 1.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
         }
 
-        /* --- KEYFRAMES --- */
+        /* --- FÍSICA DO MOVIMENTO --- */
 
-        /* 1. A inclinação vai de um extremo ao outro */
-        @keyframes gangorra-inclinacao {
-            0% { transform: rotate(-12deg); }
-            100% { transform: rotate(12deg); }
+        @keyframes inclinacao {
+            0% { transform: rotate(-18deg); }
+            100% { transform: rotate(18deg); }
         }
 
-        /* 2. O hexágono desliza de uma ponta à outra da linha */
-        @keyframes hexagono-deslize {
-            0% { transform: translateX(-180px); }
-            100% { transform: translateX(180px); }
+        @keyframes deslize {
+            /* Ele percorre quase toda a barra, chegando no limite sem cair */
+            0% { transform: translateX(-195px); }
+            100% { transform: translateX(195px); }
         }
 
-        /* 3. O giro acompanha o movimento lateral */
-        @keyframes hexagono-giro {
+        @keyframes giro {
+            /* O giro acompanha a distância para não parecer que está deslizando no gelo */
             0% { transform: rotate(-360deg); }
             100% { transform: rotate(360deg); }
         }
