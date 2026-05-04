@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Equilíbrio Dinâmico Perpétuo</title>
+    <title>Equilíbrio Ativo Perpétuo</title>
     <style>
         body {
             margin: 0;
@@ -18,8 +18,8 @@
 
         .cena {
             position: relative;
-            width: 600px;
-            height: 400px;
+            width: 500px;
+            height: 300px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -28,52 +28,56 @@
         /* A Linha da Gangorra */
         .gangorra {
             position: absolute;
-            width: 450px;
+            width: 400px;
             height: 4px;
             background-color: white;
-            border-radius: 2px;
+            border-radius: 10px;
             transform-origin: center center;
-            /* Animação com curva de seno para manter a fluidez */
-            animation: inclinacao 1.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+            /* O segredo: a inclinação reage ao movimento do hexágono */
+            animation: balanco-reativo 2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
         }
 
         /* Container do Hexágono */
         .hexagono-wrapper {
             position: absolute;
-            bottom: 4px; /* Sobre a linha */
+            bottom: 4px; /* Sempre em cima da linha */
             left: 50%;
-            margin-left: -30px;
-            width: 60px;
-            height: 51.96px;
-            /* O movimento lateral precisa ser idêntico ao tempo da gangorra */
-            animation: deslize 1.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+            margin-left: -25px;
+            width: 50px;
+            height: 43.3px; /* Proporção perfeita */
+            animation: movimento-lateral 2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
         }
 
-        /* O Hexágono propriamente dito */
+        /* O Hexágono */
         .hexagono {
             width: 100%;
             height: 100%;
             background-color: white;
             clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-            /* Rotação contínua para simular tração */
-            animation: giro 1.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+            /* O giro dá a sensação de tração/peso */
+            animation: giro-tração 2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
         }
 
-        /* --- FÍSICA DO MOVIMENTO --- */
+        /* --- ANIMAÇÕES DE EQUILÍBRIO --- */
 
-        @keyframes inclinacao {
-            0% { transform: rotate(-18deg); }
-            100% { transform: rotate(18deg); }
+        /* 1. A GANGORRA SOBE PARA SEGURAR: 
+           Quando o hexágono vai para a esquerda, o lado esquerdo SOBE (rotação positiva).
+           Isso cria a força que o empurra de volta. */
+        @keyframes balanco-reativo {
+            0% { transform: rotate(15deg); }   /* Esquerda alta, segura o hexágono */
+            100% { transform: rotate(-15deg); } /* Direita alta, segura o hexágono */
         }
 
-        @keyframes deslize {
-            /* Ele percorre quase toda a barra, chegando no limite sem cair */
-            0% { transform: translateX(-195px); }
-            100% { transform: translateX(195px); }
+        /* 2. MOVIMENTO LATERAL:
+           O hexágono vai de um lado ao outro, mas nunca chega na pontinha final. */
+        @keyframes movimento-lateral {
+            0% { transform: translateX(-160px); }
+            100% { transform: translateX(160px); }
         }
 
-        @keyframes giro {
-            /* O giro acompanha a distância para não parecer que está deslizando no gelo */
+        /* 3. GIRO SINCRONIZADO:
+           Gira 360 graus para parecer que está realmente rolando na superfície branca. */
+        @keyframes giro-tração {
             0% { transform: rotate(-360deg); }
             100% { transform: rotate(360deg); }
         }
