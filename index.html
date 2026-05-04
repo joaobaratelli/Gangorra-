@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gangorra Contínua</title>
+    <title>Gangorra - Equilíbrio Contínuo</title>
     <style>
         /* Estilo do Fundo e Reset */
         body {
@@ -38,23 +38,24 @@
             
             /* Ponto de equilíbrio no centro exato */
             transform-origin: center center;
-            animation: gangorra-inclinacao 4s ease-in-out infinite;
+            /* Usamos 'linear' para não ter paradas ou desaceleração */
+            animation: gangorra-inclinacao 3.5s linear infinite alternate;
         }
 
-        /* Container que transporta o hexágono de um lado ao outro */
+        /* Container que transporta o hexágono */
         .hexagono-wrapper {
             position: absolute;
-            bottom: 4px; /* Grudado perfeitamente em cima da barra */
+            bottom: 4px; /* Grudado na linha */
             left: 50%;
             margin-left: -30px; /* Centraliza o eixo */
             width: 60px;
-            height: 51.96px; /* Proporção matemática perfeita do hexágono */
+            height: 51.96px; /* Geometria proporcional perfeita */
             
-            /* Animação de translação contínua de ponta a ponta */
-            animation: hexagono-deslize 4s ease-in-out infinite;
+            /* Movimento linear contínuo */
+            animation: hexagono-deslize 3.5s linear infinite alternate;
         }
 
-        /* O Hexágono que gira no próprio eixo */
+        /* O Hexágono que gira */
         .hexagono {
             width: 100%;
             height: 100%;
@@ -62,28 +63,30 @@
             
             clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
             
-            /* Animação de rotação contínua */
-            animation: hexagono-giro 4s ease-in-out infinite;
+            /* Rotação linear contínua */
+            animation: hexagono-giro 3.5s linear infinite alternate;
         }
 
-        /* --- KEYFRAMES (MOVIMENTO CONTÍNUO) --- */
+        /* --- KEYFRAMES (SEM PARADAS) --- */
 
-        /* 1. A Gangorra agora alterna direto de uma ponta à outra */
+        /* Usar 'alternate' faz a animação ir de 0% a 100% e voltar de forma contínua */
+
+        /* 1. A inclinação vai de um extremo ao outro sem desacelerar */
         @keyframes gangorra-inclinacao {
-            0%, 100% { transform: rotate(-12deg); } /* Começa inclinada para a esquerda */
-            50% { transform: rotate(12deg); }      /* Vai direto para a direita */
+            0% { transform: rotate(-12deg); }
+            100% { transform: rotate(12deg); }
         }
 
-        /* 2. O Hexágono viaja de -180px até +180px sem parar no meio */
+        /* 2. O hexágono desliza de uma ponta à outra da linha */
         @keyframes hexagono-deslize {
-            0%, 100% { transform: translateX(-180px); } /* Fica na ponta esquerda */
-            50% { transform: translateX(180px); }       /* Viaja direto até a ponta direita */
+            0% { transform: translateX(-180px); }
+            100% { transform: translateX(180px); }
         }
 
-        /* 3. A Tração: O giro acompanha a distância total percorrida (720 graus = 2 voltas) */
+        /* 3. O giro acompanha a rolagem perfeitamente */
         @keyframes hexagono-giro {
-            0%, 100% { transform: rotate(-360deg); }
-            50% { transform: rotate(360deg); }
+            0% { transform: rotate(-360deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
